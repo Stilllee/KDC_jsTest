@@ -18,9 +18,27 @@ class ImageInfo {
     this.render();
   }
 
+  showDetail(data) {
+    // 상세 정보 요청
+    api.fetchCatDetail(data.cat.id).then(({ data }) => {
+      // 정보를 업데이트
+      this.setState({
+        visible: true,
+        cat: data,
+      });
+    });
+  }
+
+  closeImageInfo() {
+    this.setState({
+      visible: false,
+      cat: undefined,
+    });
+  }
+
   render() {
     if (this.data.visible) {
-      const { name, url, temperament, origin } = this.data.image;
+      const { name, url, temperament, origin } = this.data.cat;
 
       this.$imageInfo.innerHTML = `
         <div class="content-wrapper">
@@ -35,6 +53,24 @@ class ImageInfo {
           </div>
         </div>`;
       this.$imageInfo.style.display = "block";
+
+      /* this.$imageInfo.querySelector(".close").addEventListener("click", (e) => {
+        this.closeImageInfo();
+      }); */
+      // keypress, keydown, keyup 차이 리서치
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          this.closeImageInfo();
+        }
+      });
+      this.$imageInfo.addEventListener("click", (e) => {
+        if (
+          e.target.className === "ImageInfo" ||
+          e.target.className === "close"
+        ) {
+          this.closeImageInfo();
+        }
+      });
     } else {
       this.$imageInfo.style.display = "none";
     }
