@@ -1,0 +1,34 @@
+class DarkModeToggle {
+  isDarkMode = null;
+
+  constructor({ $target }) {
+    const $darkModeToggle = document.createElement("input");
+    this.$darkModeToggle = $darkModeToggle;
+    this.$darkModeToggle.type = "checkbox";
+
+    $darkModeToggle.className = "DarkModeToggle";
+    $target.appendChild($darkModeToggle);
+
+    $darkModeToggle.addEventListener("change", (e) => {
+      document.documentElement.setAttribute(
+        "color-mode",
+        e.target.checked ? "dark" : "light"
+      );
+    });
+
+    this.initColorMode();
+  }
+
+  initColorMode() {
+    // 초기화
+    // isDarkMode state, checkbox 상태, html attr
+    this.isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    this.$darkModeToggle.checked = this.isDarkMode;
+    document.documentElement.setAttribute(
+      "color-mode",
+      this.isDarkMode ? "dark" : "light"
+    );
+  }
+
+  render() {}
+}
