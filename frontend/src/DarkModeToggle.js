@@ -10,10 +10,7 @@ class DarkModeToggle {
     $target.appendChild($darkModeToggle);
 
     $darkModeToggle.addEventListener("change", (e) => {
-      document.documentElement.setAttribute(
-        "color-mode",
-        e.target.checked ? "dark" : "light"
-      );
+      this.setColorMode(e.target.checked);
     });
 
     this.initColorMode();
@@ -24,11 +21,13 @@ class DarkModeToggle {
     // isDarkMode state, checkbox 상태, html attr
     this.isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
     this.$darkModeToggle.checked = this.isDarkMode;
-    document.documentElement.setAttribute(
-      "color-mode",
-      this.isDarkMode ? "dark" : "light"
-    );
+    this.setColorMode(this.isDarkMode);
   }
 
-  render() {}
+  setColorMode(isDarkMode) {
+    document.documentElement.setAttribute(
+      "color-mode",
+      isDarkMode ? "dark" : "light"
+    );
+  }
 }
