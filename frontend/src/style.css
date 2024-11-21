@@ -95,6 +95,11 @@ body * {
   width: 100%;
 }
 
+.DarkModeToggle {
+  width: 30px;
+  height: 30px;
+}
+
 @media screen and (max-width: 992px) {
   .SearchResult {
     grid-template-columns: repeat(3, minmax(250px, 1fr));
