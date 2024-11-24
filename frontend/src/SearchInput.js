@@ -12,9 +12,10 @@ class SearchInput {
     $searchInput.className = "SearchInput";
     $wrapper.appendChild($searchInput);
 
-    $searchInput.addEventListener("keyup", (e) => {
+    $searchInput.addEventListener("keypress", (e) => {
       if (e.key === "Enter") {
         onSearch(e.target.value);
+        this.keywordHistory.addKeyword(e.target.value);
       }
     });
 
@@ -27,6 +28,11 @@ class SearchInput {
 
     $randomButton.addEventListener("click", () => {
       onRandomSearch();
+    });
+
+    this.keywordHistory = new KeywordHistory({
+      $target,
+      onSearch,
     });
   }
   render() {}

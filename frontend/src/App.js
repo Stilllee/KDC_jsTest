@@ -25,6 +25,7 @@ class App {
         api.fetchCats(keyword).then(({ data }) => {
           this.setState(data);
           this.loading.hide();
+          this.saveResult(data);
         });
       },
       onRandomSearch: () => {
@@ -54,11 +55,24 @@ class App {
         image: null,
       },
     });
+
+    this.init();
   }
 
   setState(nextData) {
-    console.log(this);
     this.data = nextData;
     this.searchResult.setState(nextData);
+  }
+
+  saveResult(result) {
+    localStorage.setItem("lastResult", JSON.stringify(result));
+  }
+
+  init() {
+    const lastResult =
+      localStorage.getItem("lastResult") === null
+        ? []
+        : JSON.parse(localStorage.getItem("lastResult"));
+    this.setState(lastResult);
   }
 }
